@@ -11,8 +11,10 @@ import {
   Timer,
   TrendingUp,
   DollarSign,
-  
   Calendar,
+  UserPlus,
+  Repeat,
+  BarChart3,
 } from 'lucide-react';
 
 const HeroSection = () => {
@@ -91,7 +93,30 @@ const HeroSection = () => {
       icon: <Users className="text-violet-600 w-6 h-6" />,
       color: 'border-violet-500',
     },
-
+    {
+      label: 'New Users Today',
+      value: stats?.newUsersToday,
+      icon: <UserPlus className="text-emerald-600 w-6 h-6" />,
+      color: 'border-emerald-500',
+    },
+    {
+      label: 'New Users This Week',
+      value: stats?.newUsersThisWeek,
+      icon: <UserPlus className="text-cyan-600 w-6 h-6" />,
+      color: 'border-cyan-500',
+    },
+    {
+      label: 'New Users This Month',
+      value: stats?.newUsersThisMonth,
+      icon: <UserPlus className="text-indigo-600 w-6 h-6" />,
+      color: 'border-indigo-500',
+    },
+    {
+      label: 'Retention Rate',
+      value: `${stats?.retentionRate}%`,
+      icon: <Repeat className="text-purple-600 w-6 h-6" />,
+      color: 'border-purple-500',
+    },
     {
       label: 'Delivery Partners',
       value: stats?.totalDeliveryPartners,
@@ -107,7 +132,7 @@ const HeroSection = () => {
     {
       label: 'Total Products',
       value: stats?.totalProducts,
-      icon: <Users className="text-violet-600 w-6 h-6" />,
+      icon: <ShoppingCart className="text-violet-600 w-6 h-6" />,
       color: 'border-violet-500',
     },
     {

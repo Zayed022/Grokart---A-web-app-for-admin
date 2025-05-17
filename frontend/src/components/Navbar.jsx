@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { LogOut, RefreshCcw } from 'lucide-react';
-import Grokart from "../../public/Grokart.png";
+import Grokart from "../assets/Grokart.png"
 
 const Navbar = () => {
   return (
@@ -23,11 +23,13 @@ const Navbar = () => {
           <RefreshCcw size={16} /> Refresh
         </button>
 
+      <Link to = "/logout">
         <button
           className="flex items-center gap-2 bg-red-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-600 transition"
         >
           <LogOut size={16} /> Logout
         </button>
+        </Link> 
       </div>
     </nav>
   );

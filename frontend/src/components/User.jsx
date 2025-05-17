@@ -3,23 +3,20 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const actions = [
-  { title: 'Add Product', path: '/products/add' },
-  { title: 'Update Product', path: '/products/update' },
-  { title: 'Delete Product', path: '/products/delete' },
-  { title: 'Get Product', path: '/products/get-products' },
-  { title: 'Get Product By ID', path: '/products/get-by-id' },
-  { title: 'Get All Products', path: '/products/all' },
-  { title: 'Categories Section', path: '/products/categories' },
-  { title: 'Subcategories Section', path: '/products/subcategories' },
-  { title: 'Mini Categories Section', path: '/products/minicategories' },
+  { title: 'Search User by ID, Name, Email, Phone', path: '/users/search' },
+  { title: 'Fetch Orders done by User', path: '/users/fetch-orders' },
+  { title: 'Get User Account Info', path: '/users/users-info' },
+  { title: 'Get All Users', path: '/users/get-all-users' },
+  
+  
 ];
 
-const Products = () => {
+const User = () => {
   const navigate = useNavigate();
 
   return (
     <div className="p-8 w-full">
-      <h1 className="text-3xl font-semibold text-gray-800 mb-8">Product Management</h1>
+      <h1 className="text-3xl font-semibold text-gray-800 mb-8">Order Management</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {actions.map((action, index) => (
@@ -41,4 +38,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default User;

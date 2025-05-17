@@ -19,19 +19,48 @@ import GetOrderById from './components/orders/GetOrderById'
 import SearchOrders from './components/orders/SearchOrders'
 import FilterOrders from './components/orders/FilterOrders'
 import ExportOrders from './components/orders/ExportOrders'
+import Register from './components/auth/Register'
+import Login from './components/auth/Login'
+import DeliveryPartner from './components/DeliveryPartner'
+import RegisteredDP from './components/deliveryPartners/RegisteredDP'
+import Approve from './components/deliveryPartners/Approve'
+import GetAllDp from './components/deliveryPartners/GetAllDp'
+import GetAllAvailableDP from './components/deliveryPartners/GetAllAvailableDP'
+import Search from './components/deliveryPartners/Search'
+import DailyCollectionByDP from './components/deliveryPartners/DaolyCollectionByDP'
+import DailyEarningsByDP from './components/deliveryPartners/DailyEarningsByDP'
+import AllTimeEarningsByDP from './components/deliveryPartners/AllTimeEarningsByDP'
+import AllOrdersByTime from './components/deliveryPartners/AllOrdersByTime'
+import DeliveryReports from './components/deliveryPartners/DeliveryReports'
+import GetCompOrdersByDP from './components/deliveryPartners/GetCompOrdersByDP'
+import User from './components/User'
+import SearchUser from './components/user/SearchUser'
+import FetchUserOrders from './components/user/FetchUserOrders'
+import ViewUser from './components/user/ViewUser'
+import GetAllUsers from './components/user/GetAllUsers'
+import Logout from './components/auth/Logout'
+import GetProducts from './components/products/GetProducts'
+import GetAllOrders from './components/orders/GetAllOrders'
+import UpdatePaymentStatus from './components/orders/UpdatePaymentStatus'
+
 
 
 
 function App() {
   return (
     <>
+     <ToastContainer position="top-right" autoClose={3000} />
     <Routes>
       <Route path="/navbar" element={<Navbar />} />
       <Route path="/" element={<Home />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/logout" element={<Logout />} />
       <Route path="/products" element={<Products />} />
       <Route path="/products/add" element={<AddProducts />} />
       <Route path="/products/update" element={<UpdateProducts />} />
       <Route path = "/products/delete" element={<DeleteProducts/>}/>
+      <Route path = "/products/get-products" element = {<GetProducts/>}/>
       <Route path = "/products/all" element = {<GetAllProducts/>}/>
       <Route path = "/products/get-by-id" element = {<GetProductById/>}/>
       <Route path = "/products/categories" element = {<AllCategories/>}/>
@@ -41,7 +70,27 @@ function App() {
       <Route path = "/orders/order-id" element = {<GetOrderById/>}/>
       <Route path = "/orders/get-by-id" element = {<SearchOrders/>}/>
       <Route path = "/orders/filters" element = {<FilterOrders/>}/>
+      <Route path = "/orders/all-orders" element = {<GetAllOrders/>}/>
+      <Route path = "/orders/payment-status" element = {<UpdatePaymentStatus/>}/>
       <Route path = "/orders/data" element = {<ExportOrders/>}/>
+      <Route path = "/delivery-partners" element = {<DeliveryPartner/>}/>
+      <Route path = "/delivery/registered" element = {<RegisteredDP/>}/>
+      <Route path = "/delivery/approve" element = {<Approve/>}/>
+      <Route path = "/delivery/get-all-DP" element = {<GetAllDp/>}/>
+      <Route path = "/delivery/get-availableDP" element = {<GetAllAvailableDP/>}/>
+      <Route path = "/delivery/search" element = {<Search/>}/>
+      <Route path = "/delivery/completed-orders" element = {<GetCompOrdersByDP/>}/>
+      <Route path = "/delivery/collection" element = {<DailyCollectionByDP/>}/>
+      <Route path = "/delivery/earnings" element = {<DailyEarningsByDP/>}/>
+      <Route path = "/delivery/all-time-earnings" element = {<AllTimeEarningsByDP/>}/>
+      <Route path = "/delivery/orders-time" element = {<AllOrdersByTime/>}/>
+      <Route path = "/delivery/reports" element = {<DeliveryReports/>}/>
+      <Route path = "/users" element = {<User/>}/>
+      <Route path = "/users/search" element = {<SearchUser/>}/>
+      <Route path = "/users/fetch-orders" element = {<FetchUserOrders/>}/>
+      <Route path = "/users/users-info" element = {<ViewUser/>}/>
+      <Route path = "/users/get-all-users" element = {<GetAllUsers/>}/>
+      
     </Routes>
     
 

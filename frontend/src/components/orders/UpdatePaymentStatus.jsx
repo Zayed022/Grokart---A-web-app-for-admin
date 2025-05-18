@@ -22,29 +22,42 @@ const UpdatePaymentStatus = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!selectedOrderId || !paymentStatus) {
-      return toast.warn("Please select both order and payment status");
-    }
+  e.preventDefault();
+  if (!selectedOrderId) {
+    return toast.warn("Choose an order first!");
+  }
 
-    try {
-      setLoading(true);
-      const res = await axios.patch(
-        "https://grokart-2.onrender.com/api/v1/admin/update-payment-status",
-        { orderId: selectedOrderId, paymentStatus },
-        { withCredentials: true }
-      );
+  setLoading(true);
 
-      toast.success(res.data.message || "Payment status updated");
-    } catch (err) {
-      console.error(err);
-      toast.error(
-        err?.response?.data?.message || "Failed to update payment status"
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    const { data } = await axios.patch(
+      "https://grokart-2.onrender.com/api/v1/admin/update-payment-status",
+      { orderId: selectedOrderId, paymentStatus },
+      { withCredentials: true }
+    );
+
+    toast.success(data.message || "Payment status updated");
+
+    /* 🔄  RE-FETCH list so the UI shows the new status */
+    await fetchOrders();
+    /* Or, if you don’t want a second trip: mutate locally
+       setOrders((prev) =>
+         prev.map((o) =>
+           o._id === selectedOrderId ? { ...o, paymentStatus } : o
+         )
+       );
+    */
+    setSelectedOrderId("");
+  } catch (err) {
+    console.error(err);
+    toast.error(
+      err?.response?.data?.message || "Failed to update payment status"
+    );
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   useEffect(() => {
     fetchOrders();
@@ -91,12 +104,17 @@ const UpdatePaymentStatus = () => {
           </div>
 
           <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
-          >
-            {loading ? "Updating..." : "Update Payment Status"}
-          </button>
+  type="submit"
+  disabled={loading || !selectedOrderId}
+  className={`w-full py-2 rounded-lg text-white ${
+    loading || !selectedOrderId
+      ? "bg-gray-400 cursor-not-allowed"
+      : "bg-blue-600 hover:bg-blue-700"
+  } transition`}
+>
+  {loading ? "Updating…" : "Update Payment Status"}
+</button>
+
         </form>
       </div>
     </div>

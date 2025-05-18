@@ -21,7 +21,7 @@ const DeleteProduct = () => {
 
     try {
       const res = await axios.delete(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/product/delete-product`,
+        "https://grokart-2.onrender.com/api/v1/products/delete-product",
         {
           data: { productId },
         }

@@ -8,7 +8,7 @@ const GetAllOrders = () => {
 
   const fetchOrders = async () => {
     try {
-      const { data } = await axios.get("https://grokart-2.onrender.com/api/v1/orders/get");
+      const { data } = await axios.get("https://grokart-2.onrender.com/api/v1/order/get");
       setOrders(data.orders);
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to fetch orders");
@@ -50,7 +50,7 @@ const GetAllOrders = () => {
                     {order._id.slice(-6)}
                   </td>
                   <td className="px-4 py-2 font-mono text-xs text-gray-600">
-                    {order.customerId.slice(-6)}
+                    {order.customerId}
                   </td>
                   <td className="px-4 py-2 font-semibold">
                     ₹{order.totalAmount}

@@ -7,7 +7,6 @@ const actions = [
   { title: 'All Order Details', path: '/orders/details' },
   { title: 'List of all Orders ', path: '/orders/all-orders' },
   { title: 'Get Order Details By Id', path: '/orders/order-id' },
-  { title: 'Update Order Status', path: '/orders/status' },
   { title: 'Update Order Payment Status', path: '/orders/payment-status' },
   { title: 'Search Order By ID, name, email ,phone', path: '/orders/get-by-id' },
   { title: 'Filter Order', path: '/orders/filters' },

@@ -16,7 +16,7 @@ const User = () => {
 
   return (
     <div className="p-8 w-full">
-      <h1 className="text-3xl font-semibold text-gray-800 mb-8">Order Management</h1>
+      <h1 className="text-3xl font-semibold text-gray-800 mb-8">User Management</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {actions.map((action, index) => (

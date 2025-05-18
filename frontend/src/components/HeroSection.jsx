@@ -70,6 +70,12 @@ const HeroSection = () => {
       color: 'border-orange-500',
     },
     {
+      label: 'Paid Orders',
+      value: stats?.paymentStatusCount,
+      icon: <CheckCircle className="text-green-600 w-6 h-6" />,
+      color: 'border-green-500',
+    },
+    {
       label: "Today's Orders",
       value: stats?.todayOrdersCount,
       icon: <Calendar className="text-indigo-600 w-6 h-6" />,

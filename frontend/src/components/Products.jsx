@@ -12,6 +12,7 @@ const actions = [
   { title: 'Categories Section', path: '/products/categories' },
   { title: 'Subcategories Section', path: '/products/subcategories' },
   { title: 'Mini Categories Section', path: '/products/minicategories' },
+  { title: 'Update Product Stock', path: '/products/stock' },
 ];
 
 const Products = () => {

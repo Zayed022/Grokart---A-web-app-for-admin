@@ -42,6 +42,7 @@ import Logout from './components/auth/Logout'
 import GetProducts from './components/products/GetProducts'
 import GetAllOrders from './components/orders/GetAllOrders'
 import UpdatePaymentStatus from './components/orders/UpdatePaymentStatus'
+import UpdateStock from './components/products/UpdateStocks'
 
 
 
@@ -64,6 +65,7 @@ function App() {
       <Route path = "/products/all" element = {<GetAllProducts/>}/>
       <Route path = "/products/get-by-id" element = {<GetProductById/>}/>
       <Route path = "/products/categories" element = {<AllCategories/>}/>
+      <Route path = "/products/stock" element = {<UpdateStock/>}/>
       <Route path = "/orders" element = {<Orders/>}/>
       <Route path = "/orders/add" element = {<AssignOrder/>}/>
       <Route path = "/orders/details" element = {<GetMyOrders/>}/>
@@ -90,6 +92,7 @@ function App() {
       <Route path = "/users/fetch-orders" element = {<FetchUserOrders/>}/>
       <Route path = "/users/users-info" element = {<ViewUser/>}/>
       <Route path = "/users/get-all-users" element = {<GetAllUsers/>}/>
+      
       
     </Routes>
     

@@ -159,7 +159,7 @@ const GetOrderById = () => {
               <ul className="list-disc list-inside text-sm text-gray-600 space-y-1">
                 {order.items.map((it) => (
                   <li key={it.productId}>
-                    {it.name} × {it.quantity} — ₹{it.price} 
+                    {it.name} (QTY:{it.description}) × {it.quantity} — ₹{it.price}     
                     
                   </li>
                   

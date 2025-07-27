@@ -18,6 +18,7 @@ const Sidebar = () => {
     { name: 'Orders', icon: <ShoppingCart size={30} />, to: '/orders' },
     { name: 'Users', icon: <Users size={30} />, to: '/users' },
     { name: 'Delivery Partners', icon: <Bike size={30} />, to: '/delivery-partners' },
+    { name: 'Shop', icon: <Package size={30} />, to: '/shop' },
     { name: 'Offers', icon: <Tag size={30} />, to: '/offers' },
     { name: 'Settings', icon: <Settings size={30} />, to: '/settings' },
   ];

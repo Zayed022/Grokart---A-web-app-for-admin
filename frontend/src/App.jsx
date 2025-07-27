@@ -43,6 +43,13 @@ import GetProducts from './components/products/GetProducts'
 import GetAllOrders from './components/orders/GetAllOrders'
 import UpdatePaymentStatus from './components/orders/UpdatePaymentStatus'
 import UpdateStock from './components/products/UpdateStocks'
+import CancelOrder from './components/orders/CancelOrder'
+import AssignOrderToShop from './components/orders/AssignOrderToShop'
+import Shop from './components/Shop'
+import RegisteredShop from './components/shop/RegisteredShop'
+import ApproveShop from './components/shop/Approve'
+import GetAllShop from './components/shop/GetAllShop'
+import SearchShop from './components/shop/SearchShop'
 
 
 
@@ -68,6 +75,7 @@ function App() {
       <Route path = "/products/stock" element = {<UpdateStock/>}/>
       <Route path = "/orders" element = {<Orders/>}/>
       <Route path = "/orders/add" element = {<AssignOrder/>}/>
+      <Route path = "/orders/shop" element = {<AssignOrderToShop/>}/>
       <Route path = "/orders/details" element = {<GetMyOrders/>}/>
       <Route path = "/orders/order-id" element = {<GetOrderById/>}/>
       <Route path = "/orders/get-by-id" element = {<SearchOrders/>}/>
@@ -75,6 +83,7 @@ function App() {
       <Route path = "/orders/all-orders" element = {<GetAllOrders/>}/>
       <Route path = "/orders/payment-status" element = {<UpdatePaymentStatus/>}/>
       <Route path = "/orders/data" element = {<ExportOrders/>}/>
+      <Route path = "/orders/cancel-order" element = {<CancelOrder/>}/>
       <Route path = "/delivery-partners" element = {<DeliveryPartner/>}/>
       <Route path = "/delivery/registered" element = {<RegisteredDP/>}/>
       <Route path = "/delivery/approve" element = {<Approve/>}/>
@@ -92,6 +101,11 @@ function App() {
       <Route path = "/users/fetch-orders" element = {<FetchUserOrders/>}/>
       <Route path = "/users/users-info" element = {<ViewUser/>}/>
       <Route path = "/users/get-all-users" element = {<GetAllUsers/>}/>
+      <Route path = "/shop" element = {<Shop/>}/>
+      <Route path = "/shop/registered" element = {<RegisteredShop/>}/>
+      <Route path = "/shop/approve" element = {<ApproveShop/>}/>
+      <Route path = "/shop/get-all-Shop" element = {<GetAllShop/>}/>
+      <Route path = "/shop/search" element = {<SearchShop/>}/>
       
       
     </Routes>

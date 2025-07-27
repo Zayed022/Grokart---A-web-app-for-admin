@@ -3,25 +3,19 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const actions = [
-  { title: 'Assign Order', path: '/orders/add' },
-  { title: 'Assign Order to Shop', path: '/orders/shop' },
-  { title: 'All Order Details', path: '/orders/details' },
-  { title: 'List of all Orders ', path: '/orders/all-orders' },
-  { title: 'Get Order Details By Id', path: '/orders/order-id' },
-  { title: 'Update Order Payment Status', path: '/orders/payment-status' },
-  { title: 'Search Order By ID, name, email ,phone', path: '/orders/get-by-id' },
-  { title: 'Filter Order', path: '/orders/filters' },
-  { title: 'Export Order ', path: '/orders/data' },
-  { title: 'Cancel Order ', path: '/orders/cancel-order' },
+  { title: 'Get Registered Shop(Not Approved)', path: '/shop/registered' },
+  { title: 'Approve Shop', path: '/shop/approve' },
+  { title: 'Get All Shops', path: '/shop/get-all-Shop' },
+  { title: 'Search Shop By Id, Name', path: '/shop/search' },
   
 ];
 
-const Orders = () => {
+const Shop = () => {
   const navigate = useNavigate();
 
   return (
     <div className="p-8 w-full">
-      <h1 className="text-3xl font-semibold text-gray-800 mb-8">Order Management</h1>
+      <h1 className="text-3xl font-semibold text-gray-800 mb-8">Delivery Partner Management</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {actions.map((action, index) => (
@@ -43,4 +37,4 @@ const Orders = () => {
   );
 };
 
-export default Orders;
+export default Shop;

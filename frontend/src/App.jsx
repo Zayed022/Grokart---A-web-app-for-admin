@@ -50,6 +50,7 @@ import RegisteredShop from './components/shop/RegisteredShop'
 import ApproveShop from './components/shop/Approve'
 import GetAllShop from './components/shop/GetAllShop'
 import SearchShop from './components/shop/SearchShop'
+import MakeStockZero from './components/products/MakeStockZero'
 
 
 
@@ -73,6 +74,7 @@ function App() {
       <Route path = "/products/get-by-id" element = {<GetProductById/>}/>
       <Route path = "/products/categories" element = {<AllCategories/>}/>
       <Route path = "/products/stock" element = {<UpdateStock/>}/>
+      <Route path = "/products/sub-category" element = {<MakeStockZero/>}/>
       <Route path = "/orders" element = {<Orders/>}/>
       <Route path = "/orders/add" element = {<AssignOrder/>}/>
       <Route path = "/orders/shop" element = {<AssignOrderToShop/>}/>

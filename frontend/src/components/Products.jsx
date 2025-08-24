@@ -13,6 +13,7 @@ const actions = [
   { title: 'Subcategories Section', path: '/products/subcategories' },
   { title: 'Mini Categories Section', path: '/products/minicategories' },
   { title: 'Update Product Stock', path: '/products/stock' },
+  { title: 'Update Product Price or Description', path: '/products/update-price' },
   { title: 'Make All Product Stock Zero of a Sub-Category ', path: '/products/sub-category' },
 ];
 

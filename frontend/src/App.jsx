@@ -19,6 +19,7 @@ import GetOrderById from './components/orders/GetOrderById'
 import SearchOrders from './components/orders/SearchOrders'
 import FilterOrders from './components/orders/FilterOrders'
 import ExportOrders from './components/orders/ExportOrders'
+import GetOrdersByStatus from './components/orders/GetOrdersByStatus'
 import Register from './components/auth/Register'
 import Login from './components/auth/Login'
 import DeliveryPartner from './components/DeliveryPartner'
@@ -51,6 +52,9 @@ import ApproveShop from './components/shop/Approve'
 import GetAllShop from './components/shop/GetAllShop'
 import SearchShop from './components/shop/SearchShop'
 import MakeStockZero from './components/products/MakeStockZero'
+import UpdateProductPrice from './components/products/UpdateProductPrice'
+
+
 
 
 
@@ -75,6 +79,7 @@ function App() {
       <Route path = "/products/categories" element = {<AllCategories/>}/>
       <Route path = "/products/stock" element = {<UpdateStock/>}/>
       <Route path = "/products/sub-category" element = {<MakeStockZero/>}/>
+      <Route path = "/products/update-price" element = {<UpdateProductPrice/>}/>
       <Route path = "/orders" element = {<Orders/>}/>
       <Route path = "/orders/add" element = {<AssignOrder/>}/>
       <Route path = "/orders/shop" element = {<AssignOrderToShop/>}/>
@@ -83,6 +88,7 @@ function App() {
       <Route path = "/orders/get-by-id" element = {<SearchOrders/>}/>
       <Route path = "/orders/filters" element = {<FilterOrders/>}/>
       <Route path = "/orders/all-orders" element = {<GetAllOrders/>}/>
+      <Route path = "/orders/all-orders-by-status" element = {<GetOrdersByStatus/>}/>
       <Route path = "/orders/payment-status" element = {<UpdatePaymentStatus/>}/>
       <Route path = "/orders/data" element = {<ExportOrders/>}/>
       <Route path = "/orders/cancel-order" element = {<CancelOrder/>}/>
@@ -111,6 +117,7 @@ function App() {
       
       
     </Routes>
+
     
 
     </>

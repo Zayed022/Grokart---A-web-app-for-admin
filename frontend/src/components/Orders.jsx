@@ -7,6 +7,7 @@ const actions = [
   { title: 'Assign Order to Shop', path: '/orders/shop' },
   { title: 'All Order Details', path: '/orders/details' },
   { title: 'List of all Orders ', path: '/orders/all-orders' },
+   { title: 'All Orders by status ', path: '/orders/all-orders-by-status' },
   { title: 'Get Order Details By Id', path: '/orders/order-id' },
   { title: 'Update Order Payment Status', path: '/orders/payment-status' },
   { title: 'Search Order By ID, name, email ,phone', path: '/orders/get-by-id' },

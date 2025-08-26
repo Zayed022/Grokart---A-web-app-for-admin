@@ -53,6 +53,8 @@ import GetAllShop from './components/shop/GetAllShop'
 import SearchShop from './components/shop/SearchShop'
 import MakeStockZero from './components/products/MakeStockZero'
 import UpdateProductPrice from './components/products/UpdateProductPrice'
+import GetCompletedOrdersByShop from './components/shop/GetCompletedOrdersByShop'
+import GetDailyEarningsOfShops from './components/shop/GetDailyEarningsOfShops'
 
 
 
@@ -114,6 +116,8 @@ function App() {
       <Route path = "/shop/approve" element = {<ApproveShop/>}/>
       <Route path = "/shop/get-all-Shop" element = {<GetAllShop/>}/>
       <Route path = "/shop/search" element = {<SearchShop/>}/>
+      <Route path = "/shop/completed-orders-by-shop" element = {<GetCompletedOrdersByShop/>}/>
+      <Route path = "/shop/daily-earnings" element = {<GetDailyEarningsOfShops/>}/>
       
       
     </Routes>

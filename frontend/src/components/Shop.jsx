@@ -7,6 +7,8 @@ const actions = [
   { title: 'Approve Shop', path: '/shop/approve' },
   { title: 'Get All Shops', path: '/shop/get-all-Shop' },
   { title: 'Search Shop By Id, Name', path: '/shop/search' },
+  { title: 'Get Completed Orders by Shop', path: '/shop/completed-orders-by-shop' },
+  { title: 'Get Daily Earnings of Shop', path: '/shop/daily-earnings' },
   
 ];
 

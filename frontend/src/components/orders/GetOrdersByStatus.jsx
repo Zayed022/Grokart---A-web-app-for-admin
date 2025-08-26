@@ -1,8 +1,9 @@
+// OrderManagement.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Loader2 } from "lucide-react";
-import { io } from "socket.io-client"; // ✅ Import socket.io client
+import { io } from "socket.io-client";
 
 const OrderManagement = () => {
   const [orders, setOrders] = useState([]);
@@ -12,6 +13,10 @@ const OrderManagement = () => {
   const [shops, setShops] = useState([]);
   const [assigning, setAssigning] = useState(false);
   const [selectedAssignments, setSelectedAssignments] = useState({});
+
+  const DELIVERY_FEE = 20; // Example flat fee
+  const PLATFORM_FEE = 5; // Example flat fee
+  const COMMISSION_RATE = 0.05; // 5% commission
 
   const statuses = [
     "All",
@@ -26,40 +31,32 @@ const OrderManagement = () => {
     "Cancelled",
   ];
 
-  // ✅ Initialize socket.io
+  // ✅ Socket.io
   useEffect(() => {
-    const socket = io("https://grokart-2.onrender.com", { transports: ["websocket"] });
+    const socket = io("https://grokart-2.onrender.com", {
+      transports: ["websocket"],
+    });
 
     socket.on("connect", () => {
       console.log("✅ Admin connected to socket:", socket.id);
     });
 
-    // ✅ Listen for new order events
     socket.on("new-order", (orderData) => {
-      console.log("📦 New order received:", orderData);
       toast.info(`🆕 New ${orderData.type.toUpperCase()} order placed!`, {
         position: "top-right",
         autoClose: 3000,
       });
 
-      // Optional: Play notification sound
-      const audio = new Audio("/notification.mp3"); // put file in /public
+      const audio = new Audio("/notification.mp3");
       audio.play().catch(() => console.log("🔇 Autoplay blocked"));
 
-      // Refresh orders automatically
       fetchOrders();
-    });
-
-    socket.on("disconnect", () => {
-      console.log("❌ Admin socket disconnected");
     });
 
     return () => {
       socket.disconnect();
     };
   }, []);
-
-  
 
   // Fetch Orders
   const fetchOrders = async () => {
@@ -80,7 +77,10 @@ const OrderManagement = () => {
 
   const fetchPartners = async () => {
     try {
-      const res = await axios.get("https://grokart-2.onrender.com/api/v1/delivery/available", { withCredentials: true });
+      const res = await axios.get(
+        "https://grokart-2.onrender.com/api/v1/delivery/available",
+        { withCredentials: true }
+      );
       setPartners(res.data.data || []);
     } catch (err) {
       console.error("Error fetching partners", err);
@@ -89,16 +89,23 @@ const OrderManagement = () => {
 
   const fetchShops = async () => {
     try {
-      const response = await axios.get("https://grokart-2.onrender.com/api/v1/shop/get-all-shops", { withCredentials: true });
+      const response = await axios.get(
+        "https://grokart-2.onrender.com/api/v1/shop/get-all-shops",
+        { withCredentials: true }
+      );
       setShops(response.data.data || []);
     } catch (error) {
-      console.error("Failed to fetch shops", error);
       toast.error("Error fetching shops");
     }
   };
 
-  useEffect(() => { fetchOrders(); }, [status]);
-  useEffect(() => { fetchPartners(); fetchShops(); }, []);
+  useEffect(() => {
+    fetchOrders();
+  }, [status]);
+  useEffect(() => {
+    fetchPartners();
+    fetchShops();
+  }, []);
 
   const handleAssign = async (orderId) => {
     const { partnerId, shopId } = selectedAssignments[orderId] || {};
@@ -108,16 +115,20 @@ const OrderManagement = () => {
     }
     setAssigning(true);
     try {
-      const shopRes = await axios.post("https://grokart-2.onrender.com/api/v1/shop/assign-order",
-        { orderId, shopId }, { withCredentials: true }
+      const shopRes = await axios.post(
+        "https://grokart-2.onrender.com/api/v1/shop/assign-order",
+        { orderId, shopId },
+        { withCredentials: true }
       );
       toast.success(shopRes.data.message || "Order assigned to shop");
 
       if (partnerId) {
-        const partnerRes = await axios.post("https://grokart-2.onrender.com/api/v1/delivery/assign-order",
-          { orderId, deliveryPartnerId: partnerId, shopId }, { withCredentials: true }
+        const partnerRes = await axios.post(
+          "https://grokart-2.onrender.com/api/v1/delivery/assign-order",
+          { orderId, deliveryPartnerId: partnerId, shopId },
+          { withCredentials: true }
         );
-        toast.success(partnerRes.data.message || "Order also assigned to delivery partner");
+        toast.success(partnerRes.data.message || "Order also assigned to partner");
       }
       fetchOrders();
     } catch (err) {
@@ -127,21 +138,93 @@ const OrderManagement = () => {
     }
   };
 
+  // inside OrderManagement.jsx
+
+const handleMarkPaymentPaid = async (orderId) => {
+  try {
+    setAssigning(true);
+    const res = await axios.patch(
+      "https://grokart-2.onrender.com/api/v1/admin/update-payment-status",
+      { orderId, paymentStatus: "Paid" },
+      { withCredentials: true }
+    );
+    toast.success(res.data.message || "Payment marked as Paid");
+    fetchOrders();
+  } catch (err) {
+    toast.error(err.response?.data?.message || "Failed to update payment status");
+  } finally {
+    setAssigning(false);
+  }
+};
+
+
   const getStatusBadge = (status) => {
-    const base = "px-2 py-1 rounded-full text-xs font-semibold";
+    const base =
+      "px-3 py-1 rounded-full text-sm font-semibold inline-block";
     switch (status) {
-      case "Delivered": return `${base} bg-green-100 text-green-700`;
-      case "Cancelled": return `${base} bg-red-100 text-red-700`;
-      case "Placed": return `${base} bg-yellow-100 text-yellow-700`;
-      default: return `${base} bg-blue-100 text-blue-700`;
+      case "Delivered":
+        return `${base} bg-green-100 text-green-700`;
+      case "Cancelled":
+        return `${base} bg-red-100 text-red-700`;
+      case "Placed":
+        return `${base} bg-yellow-100 text-yellow-700`;
+      default:
+        return `${base} bg-blue-100 text-blue-700`;
     }
   };
 
-  return (
+  const getPaymentBadge = (status) => {
+    const base =
+      "px-3 py-1 rounded-full text-sm font-semibold inline-block";
+    switch (paymentStatus) {
+      case "Paid":
+        return `${base} bg-green-300 text-green-700`;
+      case "Unpaid":
+        return `${base} bg-red-100 text-red-700`;
+      
+    }
+  };
+
+  const renderAddress = (order) => {
+    if (!order.addressDetails) return <p>{order.address}</p>;
+    const d = order.addressDetails;
+    return (
+      <div className="space-y-1">
+        <p>{order.address}</p>
+        <small className="text-xs text-gray-500 leading-snug block">
+          {d.houseNumber}, {d.floor}, {d.building}, {d.landmark},{" "}
+          {d.city}, {d.state} - {d.pincode} <br />
+          📞 {d.recipientPhoneNumber}
+        </small>
+      </div>
+    );
+  };
+
+  const renderCosting = (order) => {
+    const baseAmount = order.totalAmount-25;
+    const deliveryFee = DELIVERY_FEE;
+    const platformFee = PLATFORM_FEE;
+    const finalAmount = baseAmount + deliveryFee + platformFee;
+    const shopEarnings = baseAmount * (1 - COMMISSION_RATE);
+
+    return (
+      <div className="text-xs text-gray-600 space-y-1 mt-1">
+        <p>🛒 Subtotal: ₹{baseAmount}</p>
+        <p>🚚 Delivery Fee: ₹{deliveryFee}</p>
+        <p>⚙️ Platform Fee: ₹{platformFee}</p>
+        <p className="font-semibold">💰 Final Amount: ₹{finalAmount}</p>
+        <p className="text-green-700 font-semibold">
+          🏪 Shop Receives: ₹{shopEarnings.toFixed(2)}
+        </p>
+      </div>
+    );
+  };
+
+ return (
     <div className="p-6 bg-gray-50 min-h-screen">
       <h1 className="text-2xl font-bold mb-4">📦 Order Management</h1>
 
-      {/* Filter Bar */}
+      {/* Filter */}
       <div className="sticky top-0 z-10 bg-gray-50 py-3 mb-6 flex items-center gap-3 shadow-sm">
         <label className="font-semibold text-gray-700">Filter by Status:</label>
         <select
@@ -150,7 +233,9 @@ const OrderManagement = () => {
           className="border rounded-lg px-3 py-2 shadow-sm focus:ring-2 focus:ring-blue-500"
         >
           {statuses.map((s) => (
-            <option key={s} value={s}>{s}</option>
+            <option key={s} value={s}>
+              {s}
+            </option>
           ))}
         </select>
       </div>
@@ -168,34 +253,45 @@ const OrderManagement = () => {
                 <tr>
                   <th className="px-4 py-2">Order ID</th>
                   <th className="px-4 py-2">Customer</th>
+                  <th className="px-4 py-2">Address</th>
                   <th className="px-4 py-2">Items</th>
+                  <th className="px-4 py-2">Costing</th>
                   <th className="px-4 py-2">Shop</th>
                   <th className="px-4 py-2">Partner</th>
-                  <th className="px-4 py-2">Amount</th>
                   <th className="px-4 py-2">Payment</th>
                   <th className="px-4 py-2">Status</th>
                   <th className="px-4 py-2">Created</th>
                   <th className="px-4 py-2">Action</th>
+                  <th className="px-4 py-2">Paid/Unpaid</th>
                 </tr>
               </thead>
               <tbody>
                 {orders.map((order) => (
-                  <tr key={order._id} className="border-b hover:bg-gray-50">
+                  <tr
+                    key={order._id}
+                    className="border-b hover:bg-gray-50 align-top"
+                  >
                     <td className="px-4 py-2">{order._id}</td>
                     <td className="px-4 py-2">
                       <p className="font-semibold">{order.customerId?.name}</p>
-                      <p className="text-xs text-gray-500">{order.customerId?.phone}</p>
+                      <p className="text-xs text-gray-500">
+                        {order.customerId?.phone}
+                      </p>
                     </td>
+                    <td className="px-4 py-2">{renderAddress(order)}</td>
+
+                    {/* Items always visible */}
                     <td className="px-4 py-2">
-                      <details>
-                        <summary className="cursor-pointer text-blue-600">View</summary>
-                        <ul className="list-disc pl-4 mt-1">
-                          {order.items.map((item, i) => (
-                            <li key={i}>{item.name} × {item.quantity} - ₹{item.price}</li>
-                          ))}
-                        </ul>
-                      </details>
+                      <ul className="list-disc pl-4 space-y-1">
+                        {order.items.map((item, i) => (
+                          <li key={i}>
+                            {item.name} × {item.quantity} - ₹{item.price}
+                          </li>
+                        ))}
+                      </ul>
                     </td>
+
+                    <td className="px-4 py-2">{renderCosting(order)}</td>
                     <td className="px-4 py-2">
                       {order.status === "Placed" ? (
                         <select
@@ -203,17 +299,24 @@ const OrderManagement = () => {
                           onChange={(e) =>
                             setSelectedAssignments((prev) => ({
                               ...prev,
-                              [order._id]: { ...prev[order._id], shopId: e.target.value },
+                              [order._id]: {
+                                ...prev[order._id],
+                                shopId: e.target.value,
+                              },
                             }))
                           }
                           className="border rounded px-2 py-1"
                         >
                           <option value="">-- Select Shop --</option>
                           {shops.map((shop) => (
-                            <option key={shop._id} value={shop._id}>{shop.name}</option>
+                            <option key={shop._id} value={shop._id}>
+                              {shop.name}
+                            </option>
                           ))}
                         </select>
-                      ) : order.shopAssigned?.name || "—"}
+                      ) : (
+                        order.shopAssigned?.name || "—"
+                      )}
                     </td>
                     <td className="px-4 py-2">
                       {order.status === "Placed" ? (
@@ -222,22 +325,43 @@ const OrderManagement = () => {
                           onChange={(e) =>
                             setSelectedAssignments((prev) => ({
                               ...prev,
-                              [order._id]: { ...prev[order._id], partnerId: e.target.value },
+                              [order._id]: {
+                                ...prev[order._id],
+                                partnerId: e.target.value,
+                              },
                             }))
                           }
                           className="border rounded px-2 py-1"
                         >
                           <option value="">-- Select Partner --</option>
                           {partners.map((p) => (
-                            <option key={p._id} value={p._id}>{p.name} ({p.phone})</option>
+                            <option key={p._id} value={p._id}>
+                              {p.name} ({p.phone})
+                            </option>
                           ))}
                         </select>
-                      ) : order.assignedTo?.name || "—"}
+                      ) : (
+                        order.assignedTo?.name || "—"
+                      )}
                     </td>
-                    <td className="px-4 py-2">₹{order.totalAmount}</td>
-                    <td className="px-4 py-2">{order.isPaid ? "Paid" : "Unpaid"} ({order.paymentMethod})</td>
-                    <td className="px-4 py-2"><span className={getStatusBadge(order.status)}>{order.status}</span></td>
-                    <td className="px-4 py-2">{new Date(order.createdAt).toLocaleString()}</td>
+                    
+
+                    <td
+  className={`px-4 py-2 font-semibold ${
+    order.paymentStatus === "Paid" ? "text-green-600" : "text-red-600"
+  }`}
+>
+  {order.paymentStatus} ({order.paymentMethod})
+</td>
+
+                    <td className="px-4 py-2">
+                      <span className={getStatusBadge(order.status)}>
+                        {order.status}
+                      </span>
+                    </td>
+                    <td className="px-4 py-2">
+                      {new Date(order.createdAt).toLocaleString()}
+                    </td>
                     <td className="px-4 py-2">
                       {order.status === "Placed" && (
                         <button
@@ -245,11 +369,28 @@ const OrderManagement = () => {
                           disabled={assigning}
                           className="bg-blue-600 text-white px-3 py-1 rounded-lg text-xs flex items-center gap-2"
                         >
-                          {assigning && <Loader2 className="h-3 w-3 animate-spin" />}
+                          {assigning && (
+                            <Loader2 className="h-3 w-3 animate-spin" />
+                          )}
                           Assign
                         </button>
+                        
                       )}
                     </td>
+                    <td className="px-4 py-2">
+  {order.status === "Delivered" && order.paymentStatus !== "Paid" ? (
+    <button
+      onClick={() => handleMarkPaymentPaid(order._id)}
+      disabled={assigning}
+      className="bg-green-600 text-white px-3 py-1 rounded-lg text-xs flex items-center gap-2"
+    >
+      {assigning && <Loader2 className="h-3 w-3 animate-spin" />}
+      Mark Payment Paid
+    </button>
+  ) : (
+    "—"
+  )}
+</td>
                   </tr>
                 ))}
               </tbody>
@@ -259,40 +400,81 @@ const OrderManagement = () => {
           {/* Mobile Cards */}
           <div className="grid md:hidden gap-4">
             {orders.map((order) => (
-              <div key={order._id} className="bg-white rounded-xl shadow-md p-4 space-y-2">
+              <div
+                key={order._id}
+                className="bg-white rounded-xl shadow-md p-4 space-y-2"
+              >
                 <div className="flex justify-between items-center">
                   <h2 className="font-bold">#{order._id.slice(-6)}</h2>
-                  <span className={getStatusBadge(order.status)}>{order.status}</span>
+                  <span className={getStatusBadge(order.status)}>
+                    {order.status}
+                  </span>
                 </div>
-                <p><span className="font-semibold">Customer:</span> {order.customerId?.name} ({order.customerId?.phone})</p>
-                <p><span className="font-semibold">Amount:</span> ₹{order.totalAmount}</p>
-                <p><span className="font-semibold">Payment:</span> {order.isPaid ? "Paid" : "Unpaid"} ({order.paymentMethod})</p>
-                <p><span className="font-semibold">Created:</span> {new Date(order.createdAt).toLocaleString()}</p>
+                <p>
+                  <span className="font-semibold">Customer:</span>{" "}
+                  {order.customerId?.name} ({order.customerId?.phone})
+                </p>
+                <div>
+                  <span className="font-semibold">Address:</span>
+                  {renderAddress(order)}
+                </div>
 
-                <details>
-                  <summary className="cursor-pointer text-blue-600">View Items</summary>
+                {/* Items always visible on mobile too */}
+                <div>
+                  <span className="font-semibold">Items:</span>
                   <ul className="list-disc pl-4 mt-1">
                     {order.items.map((item, i) => (
-                      <li key={i}>{item.name} × {item.quantity} - ₹{item.price}</li>
+                      <li key={i}>
+                        {item.name} × {item.quantity} - ₹{item.price}
+                      </li>
                     ))}
                   </ul>
-                </details>
+                </div>
+
+                {/* Costing */}
+                {renderCosting(order)}
+
+                <p>
+                  <span className="font-semibold">Payment:</span>{" "}
+                  {order.paymentStatus} ({order.paymentMethod})
+                </p>
+                {order.status === "Delivered" && order.paymentStatus !== "Paid" && (
+  <button
+    onClick={() => handleMarkPaymentPaid(order._id)}
+    disabled={assigning}
+    className="w-full bg-green-600 text-white px-3 py-2 rounded-lg text-sm flex items-center justify-center gap-2 mt-2"
+  >
+    {assigning && <Loader2 className="h-4 w-4 animate-spin" />}
+    Mark Payment Paid
+  </button>
+)}
+
+                <p>
+                  <span className="font-semibold">Created:</span>{" "}
+                  {new Date(order.createdAt).toLocaleString()}
+                </p>
 
                 {order.status === "Placed" && (
                   <div className="space-y-2">
+                    {/* shop + partner select same as before */}
                     <select
                       value={selectedAssignments[order._id]?.shopId || ""}
                       onChange={(e) =>
                         setSelectedAssignments((prev) => ({
                           ...prev,
-                          [order._id]: { ...prev[order._id], shopId: e.target.value },
+                          [order._id]: {
+                            ...prev[order._id],
+                            shopId: e.target.value,
+                          },
                         }))
                       }
                       className="w-full border rounded px-2 py-1"
                     >
                       <option value="">-- Select Shop --</option>
                       {shops.map((shop) => (
-                        <option key={shop._id} value={shop._id}>{shop.name}</option>
+                        <option key={shop._id} value={shop._id}>
+                          {shop.name}
+                        </option>
                       ))}
                     </select>
 
@@ -301,14 +483,19 @@ const OrderManagement = () => {
                       onChange={(e) =>
                         setSelectedAssignments((prev) => ({
                           ...prev,
-                          [order._id]: { ...prev[order._id], partnerId: e.target.value },
+                          [order._id]: {
+                            ...prev[order._id],
+                            partnerId: e.target.value,
+                          },
                         }))
                       }
                       className="w-full border rounded px-2 py-1"
                     >
                       <option value="">-- Select Partner --</option>
                       {partners.map((p) => (
-                        <option key={p._id} value={p._id}>{p.name} ({p.phone})</option>
+                        <option key={p._id} value={p._id}>
+                          {p.name} ({p.phone})
+                        </option>
                       ))}
                     </select>
 
@@ -317,7 +504,9 @@ const OrderManagement = () => {
                       disabled={assigning}
                       className="w-full bg-blue-600 text-white px-3 py-2 rounded-lg text-sm flex items-center justify-center gap-2"
                     >
-                      {assigning && <Loader2 className="h-4 w-4 animate-spin" />}
+                      {assigning && (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      )}
                       Assign
                     </button>
                   </div>

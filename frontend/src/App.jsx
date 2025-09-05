@@ -55,6 +55,11 @@ import MakeStockZero from './components/products/MakeStockZero'
 import UpdateProductPrice from './components/products/UpdateProductPrice'
 import GetCompletedOrdersByShop from './components/shop/GetCompletedOrdersByShop'
 import GetDailyEarningsOfShops from './components/shop/GetDailyEarningsOfShops'
+import Settings from './components/Settings'
+import WishList from './components/WishList'
+import GetAllWishlist from './components/wishList/GetAllWishList'
+import ManageBanner from './components/banner/ManageBanner'
+import Notice from './components/notice/Notice'
 
 
 
@@ -118,6 +123,11 @@ function App() {
       <Route path = "/shop/search" element = {<SearchShop/>}/>
       <Route path = "/shop/completed-orders-by-shop" element = {<GetCompletedOrdersByShop/>}/>
       <Route path = "/shop/daily-earnings" element = {<GetDailyEarningsOfShops/>}/>
+      <Route path = "/settings" element = {<Settings/>}/>
+      <Route path = "/wishlist" element = {<WishList/>}/>
+      <Route path = "/wishlist/get-wishlist" element = {<GetAllWishlist/>}/>
+      <Route path = "/banner" element = {<ManageBanner/>}/>
+      <Route path = "/notice" element = {<Notice/>}/>
       
       
     </Routes>

@@ -8,7 +8,10 @@ import {
   Users,
   Bike,
   Tag,
-  Settings
+  Settings,
+  Heart,
+  Image,
+  Megaphone
 } from 'lucide-react';
 
 const Sidebar = () => {
@@ -16,9 +19,12 @@ const Sidebar = () => {
     { name: 'Dashboard', icon: <LayoutDashboard size={30} />, to: '/' },
     { name: 'Products', icon: <Package size={30} />, to: '/products' },
     { name: 'Orders', icon: <ShoppingCart size={30} />, to: '/orders' },
+    { name: "Wishlist", icon: <Heart size={30} />, to: "/wishlist" },
     { name: 'Users', icon: <Users size={30} />, to: '/users' },
     { name: 'Delivery Partners', icon: <Bike size={30} />, to: '/delivery-partners' },
     { name: 'Shop', icon: <Package size={30} />, to: '/shop' },
+    { name: 'Banner', icon: <Image size={30} />, to: '/banner' },
+    { name: 'Notice', icon: <Megaphone size={30} />, to: '/notice' },
     { name: 'Offers', icon: <Tag size={30} />, to: '/offers' },
     { name: 'Settings', icon: <Settings size={30} />, to: '/settings' },
   ];

@@ -1,6 +1,7 @@
 // src/components/Sidebar.jsx
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { X } from 'lucide-react';
 import {
   LayoutDashboard,
   Package,
@@ -14,39 +15,62 @@ import {
   Megaphone
 } from 'lucide-react';
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, onClose }) => {
   const menuItems = [
-    { name: 'Dashboard', icon: <LayoutDashboard size={30} />, to: '/' },
-    { name: 'Products', icon: <Package size={30} />, to: '/products' },
-    { name: 'Orders', icon: <ShoppingCart size={30} />, to: '/orders' },
-    { name: "Wishlist", icon: <Heart size={30} />, to: "/wishlist" },
-    { name: 'Users', icon: <Users size={30} />, to: '/users' },
-    { name: 'Delivery Partners', icon: <Bike size={30} />, to: '/delivery-partners' },
-    { name: 'Shop', icon: <Package size={30} />, to: '/shop' },
-    { name: 'Banner', icon: <Image size={30} />, to: '/banner' },
-    { name: 'Notice', icon: <Megaphone size={30} />, to: '/notice' },
-    { name: 'Offers', icon: <Tag size={30} />, to: '/offers' },
-    { name: 'Settings', icon: <Settings size={30} />, to: '/settings' },
+    { name: 'Dashboard', icon: <LayoutDashboard size={24} />, to: '/' },
+    { name: 'Products', icon: <Package size={24} />, to: '/products' },
+    { name: 'Orders', icon: <ShoppingCart size={24} />, to: '/orders' },
+    { name: "Wishlist", icon: <Heart size={24} />, to: "/wishlist" },
+    { name: 'Users', icon: <Users size={24} />, to: '/users' },
+    { name: 'Delivery Partners', icon: <Bike size={24} />, to: '/delivery-partners' },
+    { name: 'Shop', icon: <Package size={24} />, to: '/shop' },
+    { name: 'Banner', icon: <Image size={24} />, to: '/banner' },
+    { name: 'Notice', icon: <Megaphone size={24} />, to: '/notice' },
+    { name: 'Offers', icon: <Tag size={24} />, to: '/offers' },
+    { name: 'Settings', icon: <Settings size={24} />, to: '/settings' },
   ];
 
   return (
-    <aside className="w-64 min-h-screen bg-white shadow-md border-r border-gray-200 py-6 px-4">
-      <div className="space-y-2">
-        {menuItems.map((item, index) => (
-          <NavLink
-            key={index}
-            to={item.to}
-            className={({ isActive }) =>
-              `flex items-center gap-3 px-4 py-2 rounded-lg text-sm font-medium transition 
-              ${isActive ? 'bg-indigo-100 text-indigo-700' : 'text-gray-700 hover:bg-gray-100 hover:text-indigo-600'}`
-            }
-          >
-            {item.icon}
-            <span className='text-xl '>{item.name}</span>
-          </NavLink>
-        ))}
+    <>
+      {/* Mobile Sidebar (slide-in) */}
+      <div
+        className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 z-50
+          ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 md:static md:shadow-none`}
+      >
+        {/* Close button (only mobile) */}
+        <div className="flex justify-between items-center px-4 py-3 border-b md:hidden">
+          <h2 className="text-lg font-semibold">Menu</h2>
+          <button onClick={onClose}>
+            <X size={28} className="text-gray-600" />
+          </button>
+        </div>
+
+        <div className="space-y-1 px-4 py-4">
+          {menuItems.map((item, index) => (
+            <NavLink
+              key={index}
+              to={item.to}
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition
+                ${isActive ? 'bg-indigo-100 text-indigo-700' : 'text-gray-700 hover:bg-gray-100 hover:text-indigo-600'}`
+              }
+              onClick={onClose} // auto close after click (mobile)
+            >
+              {item.icon}
+              <span className="text-base">{item.name}</span>
+            </NavLink>
+          ))}
+        </div>
       </div>
-    </aside>
+
+      {/* Backdrop for mobile */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 z-40 md:hidden"
+          onClick={onClose}
+        />
+      )}
+    </>
   );
 };
 

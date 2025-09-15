@@ -157,6 +157,26 @@ const handleMarkPaymentPaid = async (orderId) => {
   }
 };
 
+const handleCancelOrder = async (orderId) => {
+  if (!window.confirm("Are you sure you want to cancel this order?")) return;
+
+  try {
+    setAssigning(true);
+    const res = await axios.post(
+      "https://grokart-2.onrender.com/api/v1/admin/cancel-order",
+      { orderId },
+      { withCredentials: true }
+    );
+    toast.success(res.data.message || "Order cancelled successfully");
+    fetchOrders(); // refresh order list
+  } catch (err) {
+    toast.error(err.response?.data?.message || "Failed to cancel order");
+  } finally {
+    setAssigning(false);
+  }
+};
+
+
 
   const getStatusBadge = (status) => {
     const base =
@@ -223,6 +243,15 @@ const handleMarkPaymentPaid = async (orderId) => {
  return (
     <div className="p-6 bg-gray-50 min-h-screen">
       <h1 className="text-2xl font-bold mb-4">📦 Order Management</h1>
+
+        <button
+        onClick={fetchOrders}
+        disabled={loading}
+        className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition disabled:opacity-50"
+      >
+        {loading && <Loader2 className="h-4 w-4 animate-spin" />}
+        Refresh
+      </button>
 
       {/* Filter */}
       <div className="sticky top-0 z-10 bg-gray-50 py-3 mb-6 flex items-center gap-3 shadow-sm">

@@ -3,8 +3,9 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { LogOut, RefreshCcw } from 'lucide-react';
 import Grokart from "../assets/Grokart.png";
+import { Menu } from 'lucide-react';
 
-const Navbar = () => {
+const Navbar = ({ onMenuClick }) => {
   // Auto refresh logic
   useEffect(() => {
     const interval = setInterval(() => {
@@ -16,6 +17,12 @@ const Navbar = () => {
 
   return (
     <nav className="w-full h-16 bg-white shadow-sm border-b border-gray-200 flex items-center justify-between px-10 py-10 sticky top-0 z-50">
+       <button
+        className="md:hidden p-2 rounded-lg hover:bg-gray-100"
+        onClick={onMenuClick}
+      >
+        <Menu size={28} className="text-gray-700" />
+      </button>
       
       {/* Logo & Brand Name */}
       <Link to="/" className="flex items-center gap-2 hover:opacity-90 transition">

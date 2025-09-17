@@ -1,7 +1,7 @@
 // src/components/Sidebar.jsx
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { X } from 'lucide-react';
+import { Bell, IndianRupee, X } from 'lucide-react';
 import {
   LayoutDashboard,
   Package,
@@ -27,6 +27,8 @@ const Sidebar = ({ isOpen, onClose }) => {
     { name: 'Banner', icon: <Image size={24} />, to: '/banner' },
     { name: 'Notice', icon: <Megaphone size={24} />, to: '/notice' },
     { name: 'Offers', icon: <Tag size={24} />, to: '/offers' },
+    { name: 'Notifications', icon: <Bell  size={24} />, to: '/notification' },
+    { name: 'Fee', icon: <IndianRupee  size={24} />, to: '/fee' },
     { name: 'Settings', icon: <Settings size={24} />, to: '/settings' },
   ];
 

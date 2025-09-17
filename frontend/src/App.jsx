@@ -60,6 +60,8 @@ import WishList from './components/WishList'
 import GetAllWishlist from './components/wishList/GetAllWishList'
 import ManageBanner from './components/banner/ManageBanner'
 import Notice from './components/notice/Notice'
+import NotificationPanel from './components/popupNotification/PopupNotification'
+import Fee from './components/fee/Fee'
 
 
 
@@ -128,6 +130,8 @@ function App() {
       <Route path = "/wishlist/get-wishlist" element = {<GetAllWishlist/>}/>
       <Route path = "/banner" element = {<ManageBanner/>}/>
       <Route path = "/notice" element = {<Notice/>}/>
+      <Route path = "/notification" element = {<NotificationPanel/>}/>
+      <Route path = "/fee" element = {<Fee/>}/>
       
       
     </Routes>

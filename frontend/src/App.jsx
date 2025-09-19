@@ -62,6 +62,7 @@ import ManageBanner from './components/banner/ManageBanner'
 import Notice from './components/notice/Notice'
 import NotificationPanel from './components/popupNotification/PopupNotification'
 import Fee from './components/fee/Fee'
+import ManageStock from './components/products/ManageStocks'
 
 
 
@@ -88,6 +89,7 @@ function App() {
       <Route path = "/products/categories" element = {<AllCategories/>}/>
       <Route path = "/products/stock" element = {<UpdateStock/>}/>
       <Route path = "/products/sub-category" element = {<MakeStockZero/>}/>
+      <Route path = "/products/manage-stock" element = {<ManageStock/>}/>
       <Route path = "/products/update-price" element = {<UpdateProductPrice/>}/>
       <Route path = "/orders" element = {<Orders/>}/>
       <Route path = "/orders/add" element = {<AssignOrder/>}/>

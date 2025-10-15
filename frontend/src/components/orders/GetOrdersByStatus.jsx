@@ -120,7 +120,7 @@ const OrderManagement = () => {
         { orderId, shopId },
         { withCredentials: true }
       );
-      toast.success(shopRes.data.message || "Order assigned to shop");
+      
 
       if (partnerId) {
         const partnerRes = await axios.post(
@@ -128,7 +128,7 @@ const OrderManagement = () => {
           { orderId, deliveryPartnerId: partnerId, shopId },
           { withCredentials: true }
         );
-        toast.success(partnerRes.data.message || "Order also assigned to partner");
+        
       }
       fetchOrders();
     } catch (err) {
@@ -148,7 +148,7 @@ const handleMarkPaymentPaid = async (orderId) => {
       { orderId, paymentStatus: "Paid" },
       { withCredentials: true }
     );
-    toast.success(res.data.message || "Payment marked as Paid");
+    
     fetchOrders();
   } catch (err) {
     toast.error(err.response?.data?.message || "Failed to update payment status");
@@ -165,7 +165,7 @@ const handleUpdateStatus = async (orderId, newStatus) => {
       { status: newStatus },
       { withCredentials: true }
     );
-    toast.success(res.data.message || "Order status updated");
+    
     fetchOrders();
   } catch (err) {
     toast.error(err.response?.data?.message || "Failed to update order status");

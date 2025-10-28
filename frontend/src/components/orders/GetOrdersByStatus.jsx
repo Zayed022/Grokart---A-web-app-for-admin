@@ -332,8 +332,10 @@ const handleCancelOrder = async (orderId) => {
                       <ul className="list-disc pl-4 space-y-1">
                         {order.items.map((item, i) => (
                           <li key={i}>
-                            {item.name} × {item.quantity} - ₹{item.price}
+                            {item.name} <br /> <div className="font-bold">DESC: {item.description}</div> <div className="font-bold">QTY: {item.quantity}</div> <div className="font-bold">₹{item.price}</div> 
                           </li>
+                          
+                          
                         ))}
                       </ul>
                     </td>
@@ -517,7 +519,10 @@ const handleCancelOrder = async (orderId) => {
         <ul className="list-disc pl-5 mt-1 text-gray-700 text-sm space-y-0.5">
           {order.items.map((item, i) => (
             <li key={i}>
-              {item.name} × {item.quantity} - ₹{item.price}
+              <div className="text-md">{item.name}</div> 
+              <div className="">Desc: {item.description}</div> 
+              <div className="font-bold">QTY: {item.quantity}</div> 
+               <div className="font-bold">Price: {item.price}</div> 
             </li>
           ))}
         </ul>

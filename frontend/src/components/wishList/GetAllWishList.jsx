@@ -92,17 +92,22 @@ const GetAllWishlist = () => {
                 {item.notes || "No notes."}
               </p>
 
-              {/* Meta */}
-              <div className="mt-auto text-xs text-gray-400 flex justify-between items-center">
-                <span>Customer: {item.customerId}</span>
-                <span>
-                  {new Date(item.createdAt).toLocaleDateString("en-IN", {
-                    day: "2-digit",
-                    month: "short",
-                    year: "numeric",
-                  })}
-                </span>
-              </div>
+             {/* Meta */}
+<div className="mt-auto text-xs text-gray-400 flex flex-col gap-1">
+  <span>Customer: {item.customerId}</span>
+  <p className="text-gray-600 text-sm mt-2">
+    <span className="font-semibold">Created:</span>{" "}
+    {new Date(item.createdAt).toLocaleString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    })}
+  </p>
+</div>
+
             </div>
           ))}
         </div>

@@ -15,6 +15,7 @@ import {
   UserPlus,
   Repeat,
   BarChart3,
+  Heart
 } from 'lucide-react';
 
 const HeroSection = () => {

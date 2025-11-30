@@ -124,6 +124,19 @@ const HeroSection = () => {
       color: 'border-purple-500',
     },
     {
+  label: 'Wishlist Items',
+  value: stats?.wishListCount,
+  icon: <Heart className="text-red-500 w-6 h-6" />,
+  color: 'border-red-500',
+},
+{
+  label: 'Users with Wishlist',
+  value: stats?.wishListUsersCount,
+  icon: <Users className="text-pink-500 w-6 h-6" />,
+  color: 'border-pink-500',
+},
+
+    {
       label: 'Delivery Partners',
       value: stats?.totalDeliveryPartners,
       icon: <UserCheck className="text-emerald-600 w-6 h-6" />,
